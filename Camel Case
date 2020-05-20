@@ -1,0 +1,62 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using System;
+
+public class CamelCase : MonoBehaviour
+{
+    public string inputString;
+    public Text showText;
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Convert(inputString);
+        }
+    }
+
+    void Convert(string s)
+    {
+        char[] ch = s.ToCharArray();
+        int size = s.Length;
+        ch[0] = char.ToUpper(ch[0]);
+        int spaces = 0;
+        int storeTmp = 0;
+
+        int i = 0;
+        //first convert given string in lower case
+        for (int x = 0; x < size; x++)
+        {
+            ch[x] = char.ToLower(ch[x]);
+        }
+        while (i != size)
+        {
+            //find spaces in line and make next word after string upper case
+            if (ch[i].ToString() == " ")
+            {
+                spaces++;
+
+                ch[i + 1] = char.ToUpper(ch[i + 1]);
+            }
+
+            else
+            {
+                //in given line the very first letter should be in lower case
+                if (i == 0)
+                {
+                    ch[i] = char.ToLower(ch[i]);
+                }
+                ch[storeTmp++] = ch[i];
+            }
+            i++;
+        }
+
+        //minus spaces and print line in camel case 
+        for (int j = 0; j < size - spaces; j++)
+        {
+            showText.text = new string(ch, 0, size - spaces);
+        }
+
+    }
+}
